@@ -42,6 +42,8 @@ func main() {
     mux.HandleFunc("GET /api/movies/{id}/reviews", h.ListReviews)
 
     origins := strings.Split(os.Getenv("ALLOWED_ORIGINS"), ",")
+    // Keep the deployed frontend working even if the Render environment variable is unset.
+    origins = append(origins, "https://moviehub-670710211.vercel.app")
     log.Println("MovieHub API ฟังอยู่ที่ :8080 ต้อนรับ", origins)
     log.Fatal(http.ListenAndServe(":8080", mw.Logging(mw.CORS(origins, mux))))
 }
